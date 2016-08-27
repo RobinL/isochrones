@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+        <link href="css/leaflet.css" rel="stylesheet"/>
+
+    <link href="css/style.css" rel="stylesheet"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+
+    <div id='map'>
+    </div>
+
+    <div class="padded_options">
+     
+      <div class=flex_parent>
+        
+        <div class="flex_item">
+          <div id='metric' class='selections2'>
+            <label for="shadingOptions">Metric for band shading
+            </label>
+            <select name="shadingOptions" id="shadingOptions">
+              </select>
+          </div>
+        </div>
+
+        <div class="flex_item">
+          <label>Change band width</label>
+            <input type="number" class= "refresh_sim" id="input_band_width" value="10"/>
+        </div>
+        
+
+      </div>
+    </div>
+   
+   <div id='hover_panel'>
+      <h3>Hover over areas to display statistics</h3>
+    
+    </div>
+
+   <div id='table_panel'>
+   
+    
+    </div>
+
+    
+    <script src="js/third_party/leaflet.js"></script>
+    <script src="js/third_party/d3.min.js"></script>
+    <script src="js/third_party/topojson.v1.min.js"></script>
+    <script src="js/third_party/underscore.js"></script>
+    <script src="js/third_party/jquery.js"></script>
+    <script src="js/third_party/handlebars-v4.0.5.js"></script>
+
+
+    <script src="js/custom_code/utils.js"></script>
+    <script src="js/custom_code/settings.js"></script>
+    <script src="js/custom_code/voronoi_map.js"></script>
+    <script src="js/custom_code/map_keys.js"></script>
+    <script src="js/custom_code/dataholder.js"></script>
+    <script src="js/custom_code/main.js"></script>
+    
+    <script id="hp_info" type="text/x-handlebars-template">
+      <div class="entry">
+        <div>
+          {{#each data}}
+            <p>
+              {{long_name}} = {{value}}
+          {{/each}}
+          </p>
+        </div>
+      </div>
+    </script>
+
+
+
+
+  </body>
+</html>
