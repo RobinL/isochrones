@@ -8,6 +8,14 @@
 
 function VoronoiMap() {
 
+    this.voronoi_cells_layer = d3.select("#voronoi_cells_layer")
+    this.facility_location_layer = d3.select("#facility_location_layer")
+    this.clip_path_layer = d3.select("#clip_path_layer")
+    this.map = VMT.mapholder.map
+
+    var me = this;
+
+
     //When the data changes we just need to redraw the overlay
     //This function styles the points and the shaded area
     this.style_overlay = function() {
@@ -22,28 +30,22 @@ function VoronoiMap() {
     //Remove overlay and redraw
     this.draw_from_scratch = function() {
 
-        d3.select("#v_map_overlay").remove()
+        VMT.mapholder.redraw()
+        me.voronoi_cells_layer.selectAll("*").remove()
 
-        var bounds = map.getBounds(),
-            topLeft = map.latLngToLayerPoint(bounds.getNorthWest()),
-            bottomRight = map.latLngToLayerPoint(bounds.getSouthEast())
+        var bounds = me.map.getBounds(),
+            topLeft = me.map.latLngToLayerPoint(bounds.getNorthWest()),
+            bottomRight = me.map.latLngToLayerPoint(bounds.getSouthEast())
 
         //Add an svg that sits on top of the leaflet map, which we draw the d3 svg elements to
-        var svg = d3.select(map.getPanes().overlayPane).append("svg")
-        svg.attr("id", "v_map_overlay")
+        var svg = me.voronoi_cells_layer.append("svg")
+       
         me.svg = svg
 
-        //The SVG overlay needs to cover the whole of the map area
-        svg.style("width", map.getSize().x + 'px')
-            .style("height", map.getSize().y + 'px')
-            .style("margin-left", topLeft.x + "px")
-            .style("margin-top", topLeft.y + "px");;
-
-
+    
         var g = svg.append("g").attr("class", "leaflet-zoom-hide")
 
         //Account for padding etc. to make sure the overlay is correctly placed
-        g.attr("transform", "translate(" + -topLeft.x + "," + -topLeft.y + ")");
 
 
         //Use leaflet's internal functions to convert the 
@@ -51,7 +53,7 @@ function VoronoiMap() {
         VMT.dataholder.current_points = VMT.dataholder.facility_to_point_csv.map(function(d) {
 
             var latlng = new L.LatLng(d.lat, d.lng);
-            var point = map.latLngToLayerPoint(latlng);
+            var point = me.map.latLngToLayerPoint(latlng);
 
             d.x = point.x;
             d.y = point.y;
@@ -65,7 +67,7 @@ function VoronoiMap() {
         //The Voronoi layout associates a path with each point that represents the x,y of the voronoi cell
         //This is the function that defines the layout
 
-        bottomRight = VMT.map.latLngToLayerPoint(bounds.getSouthEast())
+        bottomRight = me.map.latLngToLayerPoint(bounds.getSouthEast())
         var voronoi = d3.voronoi()
             .x(function(d) {
                 return d.x + (Math.random() - 0.5) * 0.001; //To avoid two points being at the same pixel values and therefore having an uncomputable voronoi
@@ -150,7 +152,7 @@ function VoronoiMap() {
 
 
         function projectPoint(x, y) {
-            var point = VMT.map.latLngToLayerPoint(new L.LatLng(y, x));
+            var point = me.map.latLngToLayerPoint(new L.LatLng(y, x));
             this.stream.point(point.x, point.y);
         }
 
@@ -317,16 +319,9 @@ function VoronoiMap() {
 
     var geo_collection = geo_collection;
 
-    var map = new L.Map("map", {
-            center: [52.53, -0.09],
-            zoom: 7,
-            errorTileUrl: 'error.png'
-        })
-        .addLayer(new L.TileLayer("https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png"));
+    
 
-    VMT.map = map;
-
-    map.on('viewreset moveend', this.draw_from_scratch);
+    me.map.on('viewreset moveend', this.draw_from_scratch);
 
     this.draw_from_scratch()
 

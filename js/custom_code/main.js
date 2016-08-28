@@ -8,7 +8,7 @@
 var p1 = $.ajax(VMT.shapefile_path)
 var p2 = $.ajax(VMT.facility_to_point_csv_path)
 var p3 = $.ajax(VMT.point_to_census_metrics_csv_path)
-
+var p4 = $.ajax(VMT.facilities_list_csv_path)
 
 // To enable this to be shared on the shared drives, comment out the above two lines, and uncomment the following:
 
@@ -16,7 +16,9 @@ var p3 = $.ajax(VMT.point_to_census_metrics_csv_path)
 // p3.resolve("hurray")
 // $.when(p3).done(function() { topo_data = [topo_data]
 
-$.when(p1,p2,p3).done(function(topo_data, facility_to_point_csv, point_to_census_metrics_csv) {
+$.when(p1,p2,p3,p4).done(function(topo_data, facility_to_point_csv, point_to_census_metrics_csv,facilities_list_csv ) {
+
+  VMT.mapholder = new MapHolder()
 
   //Convert topo_json to geojson
   var geo_collection = topo_data[0]
@@ -28,7 +30,7 @@ $.when(p1,p2,p3).done(function(topo_data, facility_to_point_csv, point_to_census
 
 
   //Add the csv data to the data manager 
-  VMT.dataholder = new DataHolder(facility_to_point_csv, point_to_census_metrics_csv)
+  VMT.dataholder = new DataHolder(facility_to_point_csv, point_to_census_metrics_csv, facilities_list_csv)
 
   var option_data=  _.map(VMT.metric_meta_data, function(d,k) {
     return {value:k, text: d.long_name}
@@ -42,6 +44,7 @@ $.when(p1,p2,p3).done(function(topo_data, facility_to_point_csv, point_to_census
 
 
   VMT.voronoimap = new VoronoiMap()
+  VMT.pointsmap = new PointsMap()
 
   $("#shadingOptions").on("change", function(d) {
   

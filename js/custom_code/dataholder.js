@@ -1,10 +1,14 @@
-function DataHolder(facility_to_point_csv, point_to_census_metrics_csv) {
+function DataHolder(facility_to_point_csv, point_to_census_metrics_csv, facilities_list_csv) {
 
     var me = this
     //Parse and convert to float
     this.facility_to_point_csv = convert_to_float(d3.csvParse(facility_to_point_csv[0]));
     this.point_to_census_metrics_csv = convert_to_float(d3.csvParse(point_to_census_metrics_csv[0]));
+    this.facilities_list_csv = convert_to_float(d3.csvParse(facilities_list_csv[0]));
 
+    _.each(this.facilities_list_csv, function(d) {
+        d["activated"] = true
+    })
 
     //Need lookups that go from point_id to census metrics
     this.point_id_to_census_metrics = {}
