@@ -45,9 +45,7 @@ function PointsMap() {
     function facilities_on_click(d) {
         // If we click the facility, we want to toggle activation and redraw
 
-        var filtered_prisons = _.filter(VMT.dataholder.facilities_list_csv, function(d) {
-            return d.activated
-        })
+
 
 
         _.each(VMT.dataholder.facilities_list_csv,function(d2) {
@@ -59,7 +57,9 @@ function PointsMap() {
         
         })
 
-        VMT.voronoi_map.draw_from_scratch()
+        VMT.dataholder.compute_new_min_distances()
+        VMT.dataholder.recompute_round_stats()
+        VMT.voronoimap.draw_from_scratch()
 
 
       

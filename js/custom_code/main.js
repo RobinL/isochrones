@@ -6,7 +6,7 @@
 
 
 var p1 = $.ajax(VMT.shapefile_path)
-var p2 = $.ajax(VMT.facility_to_point_csv_path)
+var p2 = $.ajax(VMT.facilities_points_and_durations_csv_path)
 var p3 = $.ajax(VMT.point_to_census_metrics_csv_path)
 var p4 = $.ajax(VMT.facilities_list_csv_path)
 

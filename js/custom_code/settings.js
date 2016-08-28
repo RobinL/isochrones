@@ -2,7 +2,7 @@ var VMT = {} //VoronoiMapTemplate
 
 
 VMT.shapefile_path = "topojson/uk_boundaries.json"
-VMT.facility_to_point_csv_path = "data/first_attempt.csv"
+VMT.facilities_points_and_durations_csv_path = "data/dynamic.csv"
 VMT.point_to_census_metrics_csv_path = "data/point_id_and_population.csv"
 VMT.facilities_list_csv_path = "data/facility_list.csv"
 

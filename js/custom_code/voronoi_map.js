@@ -50,7 +50,7 @@ function VoronoiMap() {
 
         //Use leaflet's internal functions to convert the 
         //points' lat lng into x y values corresponding to the leaflet map
-        VMT.dataholder.current_points = VMT.dataholder.facility_to_point_csv.map(function(d) {
+        VMT.dataholder.current_points = VMT.dataholder.voronoi_dataset.map(function(d) {
 
             var latlng = new L.LatLng(d.lat, d.lng);
             var point = me.map.latLngToLayerPoint(latlng);
