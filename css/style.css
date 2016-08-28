@@ -67,6 +67,8 @@ label {
   padding: 8px 8px 0 8px;
   bottom: 10px;
   right: 10px;
+  max-height: 400px;
+  overflow: scroll;
 }
 
 label {
@@ -100,9 +102,9 @@ path.no-data:hover {
 }
 
 
-.pure-table{border-collapse:collapse;border-spacing:0;empty-cells:show;border:1px solid #cbcbcb}
+.pure-table{border-collapse:collapse;border-spacing:0;empty-cells:show;border:1px solid #cbcbcb, font-size:5px; }
 .pure-table caption{color:#000;font:italic 85%/1 arial,sans-serif;padding:1em 0;text-align:center}
-.pure-table td,.pure-table th{border-left:1px solid #cbcbcb;border-width:0 0 0 1px;font-size:inherit;margin:0;overflow:visible;padding:.5em 1em}
+.pure-table td,.pure-table th{border-left:1px solid #cbcbcb;border-width:0 0 0 1px;font-size:10px;margin:0;overflow:visible;padding:.5em 1em}
 .pure-table td:first-child,.pure-table th:first-child{border-left-width:0}
 .pure-table thead{background-color:#e0e0e0;color:#000;text-align:left;vertical-align:bottom}
 .pure-table td{background-color:transparent}
